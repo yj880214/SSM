@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.whxh.mapper.StudentMapper">
+   <resultMap id="resultMapStudent" type="Student" >
+       <id property="id" column="id"/>
+       <result property="name" column="name"/>
+       <result property="classid" column="classid"/>
+       <result property="teacher" column="teacher"/>
+       <result property="score" column="score" />
+   </resultMap>
+
+    <select id="selectStudentAll" parameterType="ParamsStu" resultMap="resultMapStudent">
+        select * from student2019
+        <where>
+           <if test="name!=null and name!=''">
+                name like concat('%',#{name},'%')
+           </if>
+            <if test="classid!=null and classid!=''">
+                and classid like concat('%',#{classid},'%')
+            </if>
+            <if test="teacher!=null and teacher!=''">
+               and teacher like concat('%',#{teacher},'%')
+            </if>
+            <if test="scoreFrom!=null and scoreFrom!=''">
+                and score &gt;= #{scoreFrom}
+            </if>
+            <if test="scoreTo!=null and scoreTo!=''">
+                and score &lt;= #{scoreTo}
+            </if>
+        </where>
+
+    </select>
+   <!--删除-->
+    <delete id="deleteStudent">
+        delete from student2019 where id=#{id}
+    </delete>
+    <!--查询一条:为修改准备-->
+    <select id="updateStudentEdit" resultMap="resultMapStudent">
+        select * from student2019 where id=#{id}
+    </select>
+    <!--修改-->
+    <update id="upadateStudent" parameterType="Student">
+        update student2019 set
+          name=#{name},classid=#{classid},teacher=#{teacher},score=#{score}
+        where id=#{id}
+    </update>
+    <!--添加-->
+    <insert id="insertStudent" parameterType="Student">
+        insert into student2019(name,classid,teacher,score)
+        values (#{name},#{classid},#{teacher},#{score})
+    </insert>
+
+</mapper>

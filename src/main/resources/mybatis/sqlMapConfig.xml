@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--别名：分页信息-->
+    <typeAliases>
+        <typeAlias type="com.whxh.util.ParamsStu" alias="ParamsStu"/>
+    </typeAliases>
+    <!--配置分页：合理化，数据库类型Oracle,Mysql-->
+   <plugins>
+       <plugin interceptor="com.github.pagehelper.PageInterceptor">
+           <property name="reasonable" value="true"/>
+           <property name="helperDialect" value="mysql"/>
+       </plugin>
+   </plugins>
+
+</configuration>
